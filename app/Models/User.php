@@ -17,11 +17,20 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    
     protected $fillable = [
         'name',
+        'lastname',
+        'nickname',
         'email',
         'password',
     ];
+    
+    // Un usuario tiene muchas recetas
+    public function recipes(){
+        
+        return $this->hasMany(Recipe::class,'user_id','id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -29,8 +38,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password'
     ];
 
     /**
@@ -41,7 +49,7 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
+            
             'password' => 'hashed',
         ];
     }

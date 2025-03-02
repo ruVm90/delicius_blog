@@ -18,8 +18,8 @@ return new class extends Migration
             $table->longText('description');
             $table->timestamps();
             $table->string('difficulty');  
-            $table->foreignId('id_user')->constrained('users')->onDelete('cascade'); 
-            $table->foreignId('id_category')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
                               
 
         });
