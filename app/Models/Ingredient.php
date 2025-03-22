@@ -10,16 +10,18 @@ class Ingredient extends Model
 {
     use HasFactory;
 
+  
+
    protected $fillable = [
         'name',
-        'quantity',
         'recipe_id'
    ];
+   public $timestamps = false;
 
    // Muchos ingredientes pueden tener una receta
 
    public function recipe(): BelongsTo
    {
-    return $this->belongsTo(Recipe::class, 'recipe_id','id');
+    return $this->belongsTo(Recipe::class);
    }
 }

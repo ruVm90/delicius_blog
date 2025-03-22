@@ -17,11 +17,12 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->longText('description');
             $table->timestamps();
-            $table->string('difficulty');  
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
-                              
-
+            $table->string('difficulty');
+              
+            // Si un usuario se elimina, todos sus posts se eliminan automáticamente.
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            // Si una categoría se elimina, todos los posts dentro de esa categoría también se eliminan.
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
         });
     }
 

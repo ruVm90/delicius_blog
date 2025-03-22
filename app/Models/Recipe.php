@@ -23,24 +23,24 @@ class Recipe extends Model
 
     // Muchas recetas puede tener un usuario
 
-    public function user(): BelongsTo
+    public function user()
     {
-       return $this->belongsTo(User::class,'user_id','id');
+       return $this->belongsTo(User::class);
 
 
     }
 
     // Muchas recetas pueden tener una categoria
 
-    public function category(): BelongsTo
+    public function category()
     {
-        return $this->belongsTo(Category::class,'category_id','id');
+        return $this->belongsTo(Category::class);
     }
     
     // Una receta puede tener muchos ingredientes
 
     public function ingredients()
     {
-        return $this->hasMany(Ingredient::class,'recipe_id','id');
+        return $this->hasMany(Ingredient::class);
     }
 }

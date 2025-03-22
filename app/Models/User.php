@@ -18,10 +18,11 @@ class User extends Authenticatable
      * @var list<string>
      */
     
+     // Desactivo el timestamps
+    public $timestamps = false;
+
     protected $fillable = [
         'name',
-        'lastname',
-        'nickname',
         'email',
         'password',
     ];
@@ -29,7 +30,7 @@ class User extends Authenticatable
     // Un usuario tiene muchas recetas
     public function recipes(){
         
-        return $this->hasMany(Recipe::class,'user_id','id');
+        return $this->hasMany(Recipe::class);
     }
 
     /**
