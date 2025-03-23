@@ -7,8 +7,10 @@ use App\Http\Requests\Recipe\StoreRequest;
 use App\Models\Category;
 use App\Models\Ingredient;
 use App\Models\Recipe;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RecipeController extends Controller
 {
@@ -41,7 +43,7 @@ class RecipeController extends Controller
       // dd($request->all());
       $data = $request->validated(); // Obtengo los datos validos
 
-      // Si 
+      // Si el request tiene un archivo llamado image la guardo en storage/app/public/recipes-img/
       if($request->hasFile('image')){
         $data['image'] = $request->file('image')->store('recipes-img','public');
       }
@@ -82,19 +84,55 @@ class RecipeController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * Retorno el formulario con las categorias y le paso la variable recipe
      */
     public function edit(Recipe $recipe)
     {
-        //
+       $categories = Category::pluck('id', 'category_name');
+       return view('dashboard.recipe.edit', compact('categories','recipe'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Recipe $recipe)
+    public function update(StoreRequest $request, Recipe $recipe)
     {
-        //
+        $data = $request->validated(); // Obtengo los datos validos
+
+      // Si el request tiene un archivo llamado image, la guardo en storage/app/public/recipes-img/
+    if ($request->hasFile('image')) {
+        // Eliminar la imagen anterior si existe
+        if ($recipe->image) {
+            Storage::disk('public')->delete($recipe->image);
+        }
+        $data['image'] = $request->file('image')->store('recipes-img', 'public');
+    } else {
+        $data['image'] = $recipe->image; // Mantener la imagen anterior
     }
+       $recipe->update(
+            [
+                'title' => $data['title'],
+                'image' => $data['image'],
+                'description' => $data['description'],
+                'difficulty' => $data['difficulty'],
+                'category_id' => $data['category_id'],
+            ]
+            );
+            // Guardar los ingredientes de la receta
+            
+          // Actualizar ingredientes: eliminar los existentes y agregar los nuevos
+    $recipe->ingredients()->delete(); // Borra los ingredientes anteriores
+
+    foreach ($data['ingredients'] as $ingredient) {
+        $recipe->ingredients()->create([
+            'name' => $ingredient,
+            'recipe_id' => $recipe->id
+        ]);
+    }
+             return to_route('recipe.index')->with('status','Receta actualizada'); // redirecciono a la vista de inicio y muestro un mensaje
+    }
+
+    
 
     /**
      * Remove the specified resource from storage.
