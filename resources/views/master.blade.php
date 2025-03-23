@@ -20,6 +20,11 @@
 
             @include('layouts.navigation')
 
+            @if(session('status'))
+                  {{ session('status')}}
+                
+            @endif
+
             <!-- Page Heading -->
             @isset($header)
                 <header class="bg-white dark:bg-gray-800 shadow">

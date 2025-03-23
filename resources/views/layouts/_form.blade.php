@@ -3,45 +3,56 @@
 @csrf
 
 <label for="title">Nombre de la receta:</label>
-<input type="text" name="title">
+<input type="text" name="title" value="{{ old('title') }}">
 
 <!-- pongo las categorias en el select y obtengo el id de la seleccionada --->
 <label for="category_id">Categoria:</label>
 <select name="category_id" id="category_id">
     @foreach ($categories as $name => $id)
-        <option value="{{$id}}">{{$name}}</option>
+        <option value="{{$id}}"{{ old('category_id') == $id ? 'selected' : '' }}>{{$name}}</option>
         
     @endforeach
 </select>
 <div class="ingredients-container">
     <label for="ingredients">Ingredientes y cantidad:</label>
-    <input type="text" name="ingredients[]">
-    <input type="text" name="ingredients[]">
-    <input type="text" name="ingredients[]">
+    <div class="ingredient-item">
+        <input type="text" name="ingredients[]" value="{{ old('ingredients.0') }}">
+    </div>
+    <div class="ingredient-item">
+        <input type="text" name="ingredients[]" value="{{ old('ingredients.1') }}">
+    </div>
+    <div class="ingredient-item">
+        <input type="text" name="ingredients[]" value="{{ old('ingredients.2') }}">
+    </div>
     <button id="add-ingredient">Añadir otro ingrediente</button>
 </div>
 <label for="image">Imagen de la receta:</label>
 <input type="file" name="image">
 
 <label for="description">Descripción:</label>
-<textarea name="description" id="description" cols="30" rows="10"></textarea>
+<textarea name="description" id="description" cols="30" rows="10" >{{ old('description') }}</textarea>
 
 <label for="difficulty">Nivel de dificultad:</label>
 <select name="difficulty" id="difficulty">
-    <option value="facil">Facil</option>
-    <option value="normal">Medio</option>
-    <option value="dificil">Dificil</option>
+    <option value="Facil">Facil</option>
+    <option value="Medio">Medio</option>
+    <option value="Dificil">Dificil</option>
 </select>
 <script>
-    // Funcion que añadira inputs de ingredientes si se hace click en el boton
-
-   document.getElementById("add-ingredient").addEventListener("click", function(event){
-      let container = document.getElementsByClassName("ingredients-container")[0];
-      event.preventDefault(); // Evita la recarga de la pagina
-      let input = document.createElement('input');
-      input.type = 'text';
-      input.name = 'ingredients[]';
-      container.appendChild(input);
-   });
-</script>
+    // Añade inputs para introducir ingredientes segun se pulse el boton
+    document.getElementById("add-ingredient").addEventListener("click", function(event){
+       event.preventDefault(); // Evita la recarga de la pagina
+       
+       let container = document.getElementsByClassName("ingredients-container")[0];
+       let newIngredient = document.createElement('div');
+       newIngredient.classList.add('ingredient-item');
+       
+       let input = document.createElement('input');
+       input.type = 'text';
+       input.name = 'ingredients[]';
+       
+       newIngredient.appendChild(input);
+       container.appendChild(newIngredient);
+    });
+ </script>
 

@@ -54,7 +54,7 @@
         <p class="mt-4 text-white text-lg">Explora deliciosas recetas y encuentra inspiración para tus comidas.</p>
         <p class="mt-4 text-white text-lg">Sorprende con estas comidas hechas para todas las edades.</p>
         <p class="mt-4 text-white text-lg">Registrate o inicia sesion para explorar y subir tus recetas.</p>
-        <a href="{{ route('register') }}"href="{{ route('register') }}" class="mt-6 inline-block bg-white text-yellow-500 font-bold py-2 px-4 rounded shadow-md">Ver Recetas</a>
+        <a href="{{ route('register') }}" class="mt-6 inline-block bg-white text-yellow-500 font-bold py-2 px-4 rounded shadow-md">Ver Recetas</a>
     </section>
                 <!-- Categorías Destacadas -->
     <section class="container mx-auto py-12">

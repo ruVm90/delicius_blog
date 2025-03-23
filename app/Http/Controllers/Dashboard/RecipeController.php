@@ -40,6 +40,14 @@ class RecipeController extends Controller
     {
       // dd($request->all());
       $data = $request->validated(); // Obtengo los datos validos
+
+      // Si 
+      if($request->hasFile('image')){
+        $data['image'] = $request->file('image')->store('recipes-img','public');
+      }
+      else{
+        $data['image'] = null;
+      }
        $recipe = Recipe::create( 
             [
                 'title' => $data['title'],
@@ -59,15 +67,17 @@ class RecipeController extends Controller
                 ]
                 );
          };
-             
+             return to_route('recipe.index')->with('status','Receta creada'); // redirecciono a la vista de inicio y muestro un mensaje
     }
 
     /**
+     * Recibe por parametro una receta
+     * Retorno la vista y la variable pasada
      * Display the specified resource.
      */
     public function show(Recipe $recipe)
     {
-        //
+        return view('dashboard.recipe.show', compact('recipe'));
     }
 
     /**

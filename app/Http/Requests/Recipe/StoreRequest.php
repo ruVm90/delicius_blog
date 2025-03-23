@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
             'title' => 'required|string|min:5|max:500',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'required|string|min:10',
-            'difficulty' => 'required|string|in:fácil,medio,difícil',
+            'difficulty' => 'required|string|in:Facil,Medio,Difícil',
             'category_id' => 'required|integer',
             'ingredients' => 'required|array|min:1', // Debe ser un array y tener al menos un ingrediente
             'ingredients.*' => 'required|string|max:255', // Cada ingrediente debe ser un string válido
