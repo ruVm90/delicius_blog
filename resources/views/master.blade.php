@@ -1,44 +1,47 @@
 <!--- Plantilla maestra de la que todas heredaran -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <title>{{ config('app.name', 'My Delicious Blog') }}</title>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-50">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-            @include('layouts.navigation')
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
 
-            @if(session('status'))
-                  {{ session('status')}}
-                
-            @endif
+<body>
+    <!-- Componente HEADER -->
+    @include('layouts._navigation')
+    <div class="min-h-screen mt-10 bg-gray-200 mx-20">
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+        <!-- Si existe un mensaje en la sesion con la key status, lo muestra -->
+        @if(session('status'))
+        {{ session('status')}}
+        @endif
+        @if(session('status-category'))
+        {{ session('status-category')}}
+        @endif
 
-            <!-- Page Content -->
-            <main>
-                <h1>master</h1>
-                @yield('content')
-            </main>
-        </div>
-    </body>
+        <!-- Page Content -->
+        <main>
+             
+            @yield('content')
+            <h2>Hola estoy dentro de la plantilla maestra</h2>
+        </main>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-gray-200 font-semibold my-10 mx-20 text-yellow-500 py-6 text-center">
+        <p>&copy; 2025 MY Delicius Blog. Todos los derechos reservados.</p>
+        <p>Síguenos en <a href="#" class="underline">Redes Sociales</a></p>
+    </footer>
+</body>
+
 </html>

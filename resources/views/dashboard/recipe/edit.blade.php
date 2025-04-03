@@ -52,22 +52,28 @@
 
 <button type="submit">Editar receta</button>
 </form>
+<form action="{{ route('recipe.destroy', $recipe->id) }}" method="POST">
+    @method('DELETE')
+    @csrf
+    <button type="submit">BORRAR RECETA</button>
+</form>    
 <script>
     // Añade inputs para introducir ingredientes segun se pulse el boton
-    document.getElementById("add-ingredient").addEventListener("click", function(event){
-       event.preventDefault(); // Evita la recarga de la pagina
+    document.getElementById("add-ingredient").addEventListener("click", addIngredient)
+    
+    function addIngredient(event){
+          event.preventDefault(); // Evita la recarga de la pagina
+          let container = document.getElementsByClassName("ingredients-container")[0];
+          let newIngredient = document.createElement('div');
+          newIngredient.classList.add('ingredient-item');
        
-       let container = document.getElementsByClassName("ingredients-container")[0];
-       let newIngredient = document.createElement('div');
-       newIngredient.classList.add('ingredient-item');
+          let input = document.createElement('input');
+          input.type = 'text';
+          input.name = 'ingredients[]';
        
-       let input = document.createElement('input');
-       input.type = 'text';
-       input.name = 'ingredients[]';
-       
-       newIngredient.appendChild(input);
-       container.appendChild(newIngredient);
-    });
+          newIngredient.appendChild(input);
+          container.appendChild(newIngredient);
+    }
  </script>
 @endsection
 

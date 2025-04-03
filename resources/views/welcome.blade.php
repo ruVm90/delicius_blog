@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>My Delicius Blog</title>
+        <title>My Delicious Blog</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -20,28 +20,31 @@
         @endif
     </head>
     <body class="bg-gray-100">
-        <header class="bg-white shadow-md py-4">
-            <div class="container mx-auto text-center text-5xl font-bold text-gray-800">My Delicius Blog</div>
+        <header class="bg-white shadow-md py-4 min-h-[400px]" style="background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), 
+        url('/assets/welcome/Portada_blog.png'); 
+        background-size: cover; 
+        background-position: bottom;">
+            
             @if (Route::has('login'))
                 <nav class="flex items-center justify-end gap-4">
                     @auth
                         <a
                             href="{{ url('/dashboard') }}"
-                            class="inline-block px-5 py-1.5 bg-gray-800 text-white border border-gray-700 hover:border-gray-600 rounded-sm text-sm leading-normal">
-                            Dashboard
+                            class="bg-yellow-500 hover:bg-yellow-400 text-black py-2 px-6 rounded-full text-lg transition-all">
+                            Mis recetas
                         </a>
                     @else
                         <a
                             href="{{ route('login') }}"
-                            class="inline-block px-5 py-1.5 bg-gray-800 text-white border border-gray-700 hover:border-gray-600 rounded-sm text-sm leading-normal">
-                            Log in
+                            class="bg-yellow-500 hover:bg-yellow-400 text-black py-2 px-6 rounded-full text-lg transition-all">
+                            Iniciar sesion
                         </a>
 
                         @if (Route::has('register'))
                             <a
                                 href="{{ route('register') }}"
-                                class="inline-block px-5 py-1.5 bg-gray-800 text-white border border-gray-700 hover:border-gray-600 rounded-sm text-sm leading-normal">
-                                Register
+                                class="bg-yellow-500 hover:bg-yellow-400 text-black py-2 px-6 rounded-full text-lg transition-all">
+                                Registrarse
                             </a>
                         @endif
                     @endauth
@@ -49,14 +52,16 @@
             @endif
         </header>
         <!-- Hero Section -->
-    <section class="bg-yellow-500 py-20 text-center">
-        <h1 class="text-4xl font-extrabold text-white">Bienvenido!!</h1>
-        <p class="mt-4 text-white text-lg">Explora deliciosas recetas y encuentra inspiración para tus comidas.</p>
-        <p class="mt-4 text-white text-lg">Sorprende con estas comidas hechas para todas las edades.</p>
-        <p class="mt-4 text-white text-lg">Registrate o inicia sesion para explorar y subir tus recetas.</p>
-        <a href="{{ route('register') }}" class="mt-6 inline-block bg-white text-yellow-500 font-bold py-2 px-4 rounded shadow-md">Ver Recetas</a>
-    </section>
-                <!-- Categorías Destacadas -->
+        <section class="text-center bg-indigo-50 container mx-auto py-12">
+        
+    
+       <h1 class="text-4xl font-extrabold text-gray-800">Bienvenido!!</h1>
+       <p class="mt-4 text-gray-800 text-lg">Explora deliciosas recetas y encuentra inspiración para tus comidas.</p>
+       <p class="mt-4 text-gray-800 text-lg">Sorprende con estas comidas hechas para todas las edades.</p>
+       <p class="mt-4 text-gray-800 text-lg">Registrate o inicia sesion para explorar y subir tus recetas.</p>
+       <a href="{{ route('register') }}"
+           class="mt-6 inline-block bg-white text-yellow-500 font-bold py-2 px-4 rounded shadow-md">Ver Recetas</a>
+   </section>  <!-- Categorías Destacadas -->
     <section class="container mx-auto py-12">
         <h2 class="text-3xl font-bold text-gray-800 text-center">Categorías Populares</h2>
         <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -100,7 +105,7 @@
             <div class="h-14.5 hidden lg:block"></div>
         @endif
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-6 text-center">
+    <footer class="bg-gray-200 text-yellow-600 py-6 text-center">
         <p>&copy; 2025 MY Delicius Blog. Todos los derechos reservados.</p>
         <p>Síguenos en <a href="#" class="underline">Redes Sociales</a></p>
     </footer>    

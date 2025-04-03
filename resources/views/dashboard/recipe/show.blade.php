@@ -1,3 +1,4 @@
+<!-- Detalle de la receta -->
 @extends('master')
 @section('content')
 

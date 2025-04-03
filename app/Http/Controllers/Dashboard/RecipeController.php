@@ -7,9 +7,12 @@ use App\Http\Requests\Recipe\StoreRequest;
 use App\Models\Category;
 use App\Models\Ingredient;
 use App\Models\Recipe;
+use App\Models\User;
 use Illuminate\Contracts\Cache\Store;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\Storage;
 
 class RecipeController extends Controller
@@ -99,7 +102,6 @@ class RecipeController extends Controller
     {
         $data = $request->validated(); // Obtengo los datos validos
 
-      // Si el request tiene un archivo llamado image, la guardo en storage/app/public/recipes-img/
     if ($request->hasFile('image')) {
         // Eliminar la imagen anterior si existe
         if ($recipe->image) {
@@ -118,7 +120,7 @@ class RecipeController extends Controller
                 'category_id' => $data['category_id'],
             ]
             );
-            // Guardar los ingredientes de la receta
+    
             
           // Actualizar ingredientes: eliminar los existentes y agregar los nuevos
     $recipe->ingredients()->delete(); // Borra los ingredientes anteriores
@@ -136,9 +138,22 @@ class RecipeController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * Elimina la receta enviada por el parametro y redirecciona a la pagina de inicio
      */
     public function destroy(Recipe $recipe)
     {
-        //
+        $recipe->delete();
+        return to_route('recipe.index')->with('status','Receta borrada');
+    }
+
+    /**
+     *  Mostrar el dashboard en mis recetas
+     */
+    public function dashboard(){
+
+        $user = auth()->user(); // Obtengo el usuario autenticado
+        $my_recipes = $user->recipes()->get();
+
+        return view('dashboard.recipe.dashboard', compact('my_recipes', 'user'));
     }
 }
