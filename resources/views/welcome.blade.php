@@ -19,95 +19,78 @@
             </style>
         @endif
     </head>
-    <body class="bg-gray-100">
-        <header class="bg-white shadow-md py-4 min-h-[400px]" style="background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), 
-        url('/assets/welcome/Portada_blog.png'); 
-        background-size: cover; 
-        background-position: bottom;">
-            
-            @if (Route::has('login'))
-                <nav class="flex items-center justify-end gap-4">
-                    @auth
-                        <a
-                            href="{{ url('/dashboard') }}"
-                            class="bg-yellow-500 hover:bg-yellow-400 text-black py-2 px-6 rounded-full text-lg transition-all">
-                            Mis recetas
-                        </a>
-                    @else
-                        <a
-                            href="{{ route('login') }}"
-                            class="bg-yellow-500 hover:bg-yellow-400 text-black py-2 px-6 rounded-full text-lg transition-all">
-                            Iniciar sesion
-                        </a>
-
-                        @if (Route::has('register'))
-                            <a
-                                href="{{ route('register') }}"
-                                class="bg-yellow-500 hover:bg-yellow-400 text-black py-2 px-6 rounded-full text-lg transition-all">
-                                Registrarse
+    <body class="bg-gray-50 text-gray-800 font-sans">
+        <!-- Header limpio -->
+        <header class="bg-white shadow-sm">
+            <div class="container mx-auto px-6 py-6 flex justify-between items-center">
+                <h1 class="text-2xl font-extrabold text-yellow-600">My Delicious Blog</h1>
+                @if (Route::has('login'))
+                    <nav class="flex items-center space-x-4">
+                        @auth
+                            <a href="{{ url('/dashboard') }}"
+                                class="bg-yellow-500 hover:bg-yellow-400 text-white py-2 px-4 rounded-full text-sm font-semibold transition">
+                                Mis Recetas
                             </a>
-                        @endif
-                    @endauth
-                </nav>
-            @endif
+                        @else
+                            <a href="{{ route('login') }}"
+                                class="bg-yellow-500 hover:bg-yellow-400 text-white py-2 px-4 rounded-full text-sm font-semibold transition">
+                                Iniciar Sesión
+                            </a>
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}"
+                                    class="border border-yellow-500 text-yellow-600 hover:bg-yellow-100 py-2 px-4 rounded-full text-sm font-semibold transition">
+                                    Registrarse
+                                </a>
+                            @endif
+                        @endauth
+                    </nav>
+                @endif
+            </div>
         </header>
-        <!-- Hero Section -->
-        <section class="text-center bg-indigo-50 container mx-auto py-12">
-        
     
-       <h1 class="text-4xl font-extrabold text-gray-800">Bienvenido!!</h1>
-       <p class="mt-4 text-gray-800 text-lg">Explora deliciosas recetas y encuentra inspiración para tus comidas.</p>
-       <p class="mt-4 text-gray-800 text-lg">Sorprende con estas comidas hechas para todas las edades.</p>
-       <p class="mt-4 text-gray-800 text-lg">Registrate o inicia sesion para explorar y subir tus recetas.</p>
-       <a href="{{ route('register') }}"
-           class="mt-6 inline-block bg-white text-yellow-500 font-bold py-2 px-4 rounded shadow-md">Ver Recetas</a>
-   </section>  <!-- Categorías Destacadas -->
-    <section class="container mx-auto py-12">
-        <h2 class="text-3xl font-bold text-gray-800 text-center">Categorías Populares</h2>
-        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white  p-6 shadow-lg rounded-lg text-center flex flex-col items-center h-72">
-                <h3 class="mb-3 text-xl font-semibold">Arroces y Pastas</h3>
-                <img src="/assets/welcome/categories/arrocesPasta.jpg" class="w-full h-40 object-cover rounded-lg" alt="Arroz y pasta">
-                <p class="text-gray-600 mt-2">Sabores irresistibles al más puro estilo italiano y oriental.</p>
-            
+        <!-- Hero principal -->
+        <section class="bg-white">
+            <div class="container mx-auto px-6 py-20 text-center ">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">¡Bienvenido a tu rincón culinario!</h2>
+                <p class="text-lg md:text-xl text-gray-600 mb-4">Descubre, comparte y guarda recetas deliciosas para todos los gustos y edades.</p>
+                <p class="text-lg md:text-xl text-gray-600 mb-8">¿Estás listo para cocinar algo increíble?</p>
+                <a href="{{ route('register') }}"
+                    class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-3 px-8 rounded-full text-lg transition-all transform hover:scale-105">
+                    Explorar Recetas
+                </a>
             </div>
-            <div class="bg-white p-6 shadow-lg rounded-lg text-center flex flex-col items-center h-72">
-                <h3 class="mb-3 text-xl font-semibold">Carnes</h3>
-                <img src="/assets/welcome/categories/carnes.jpg" class="w-full h-40 object-cover rounded-lg">
-                <p class="text-gray-600 mt-2">Jugosas y llenas de sabor, perfectas para cualquier ocasión.</p>
+        </section>
+        <hr class="mx-8 h-2">
+        <!-- Categorías -->
+        <section class="container mx-auto px-6 py-16">
+            <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">Categorías Populares</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 bg-gray-100 p-4 rounded-xl">
+                @foreach ($categories as $category)
+                    <div class="bg-white rounded-xl shadow hover:shadow-lg transition transform hover:-translate-y-1 p-4 flex flex-col items-center text-center border border-yellow-400">
+                        <a href="{{ route('category.show', $category) }}" class="w-full">
+                            @if ($category->image)
+                                <img src="{{ asset('storage/' . $category->image) }}"
+                                    class="w-full h-40 object-cover rounded-lg mb-4"
+                                    alt="{{ $category->category_name }}">
+                            @else
+                                <div class="w-full h-40 flex items-center justify-center bg-gray-100 rounded-lg text-gray-400 italic mb-4">
+                                    Sin imagen
+                                </div>
+                            @endif
+                        </a>
+                        <h4 class="text-lg font-semibold text-gray-900 uppercase mb-2">{{ $category->category_name }}</h4>
+                        <p class="text-sm text-gray-600">{{ $category->description ?? 'Explora más sobre esta categoría.' }}</p>
+                    </div>
+                @endforeach
             </div>
-            <div class="bg-white p-6 shadow-lg rounded-lg text-center flex flex-col items-center h-72">
-                <h3 class="mb-3 text-xl font-semibold">Cremas y Sopas</h3>
-                <img src="/assets/welcome/categories/cremasSopas.jpg" class="w-full h-40 object-cover rounded-lg" alt="Cremas y sopas">
-                <p class="text-gray-600 mt-2">Recetas fáciles y reconfortantes para cualquier época del año.</p>
+        </section>
+    
+        <!-- Footer -->
+        <footer class="bg-white border-t mt-12">
+            <div class="container mx-auto px-6 py-8 text-center text-sm text-gray-500">
+                <p>&copy; 2025 My Delicious Blog. Todos los derechos reservados.</p>
+                <p>Síguenos en <a href="#" class="underline hover:text-yellow-600">Redes Sociales</a></p>
             </div>
-            <div class="bg-white p-6 shadow-lg rounded-lg text-center flex flex-col items-center h-72">
-                <h3 class="mb-3 text-xl font-semibold">Pescados</h3>
-                <img src="/assets/welcome/categories/pescado.jpg" class="w-full h-40 object-cover rounded-lg" alt="Pescado">
-                <p class="text-gray-600 mt-2">Opciones saludables y rápidas con un toque de frescura.</p>
-            </div>
-            <div class="bg-white p-6 shadow-lg rounded-lg text-center flex flex-col items-center h-72">
-                <h3 class="mb-3 text-xl font-semibold">Ensaladas</h3>
-                <img src="/assets/welcome/categories/ensaladas.jpg" class="w-full h-40 object-cover rounded-lg" alt="Ensaladas">
-                <p class="text-gray-600 mt-2">Frescas y nutritivas, ideales para acompañar cualquier comida.</p>
-            </div>
-           
-            <div class="bg-white p-6 shadow-lg rounded-lg text-center flex flex-col items-center h-72">
-                <h3 class="mb-3 text-xl font-semibold">Postres</h3>
-                <img src="/assets/welcome/categories/postres.jpg" class="w-full h-40 object-cover rounded-lg" alt="Postres">
-                <p class="text-gray-600 mt-2">Dulces irresistibles para deleitar a todos los paladares.</p>
-            </div>
-            
-        </div>
-    </section>
-
-        @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
-        @endif
-    <!-- Footer -->
-    <footer class="bg-gray-200 text-yellow-600 py-6 text-center">
-        <p>&copy; 2025 MY Delicius Blog. Todos los derechos reservados.</p>
-        <p>Síguenos en <a href="#" class="underline">Redes Sociales</a></p>
-    </footer>    
+        </footer>
     </body>
-</html>
+    

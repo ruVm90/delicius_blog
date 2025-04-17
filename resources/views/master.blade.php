@@ -20,7 +20,7 @@
 <body>
     <!-- Componente HEADER -->
     @include('layouts._navigation')
-    <div class="min-h-screen mt-10 bg-gray-200 mx-20">
+    <div class="min-h-screen mt-10 bg-gray-200 mx-20 rounded-md">
 
         <!-- Si existe un mensaje en la sesion con la key status, lo muestra -->
         @if(session('status'))
@@ -34,7 +34,7 @@
         <main>
              
             @yield('content')
-            <h2>Hola estoy dentro de la plantilla maestra</h2>
+            
         </main>
     </div>
     <!-- Footer -->

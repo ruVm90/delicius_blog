@@ -12,8 +12,8 @@ class Category extends Model
 
    protected $fillable = [
     
-   'category_name'
-
+   'category_name',
+    'image' 
    ];
    public $timestamps = false;
    // una categoria puede tener muchas recetas

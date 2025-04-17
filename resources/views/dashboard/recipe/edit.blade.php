@@ -1,11 +1,15 @@
 @extends('master')
 @section('content')
 @include('layouts/_error-forms')
-
+<div class=" p-7">
 <form action="{{route('recipe.update', $recipe->id)}}" method="POST" enctype="multipart/form-data">
 
     @method('PATCH')
-    @csrf
+    @include('layouts/_form')
+
+</form>
+</div>   
+   {{--  @csrf
 
     <label for="title">Nombre de la receta:</label>
     <input type="text" name="title" value="{{ $recipe->title }}">
@@ -51,11 +55,7 @@
 
 
 <button type="submit">Editar receta</button>
-</form>
-<form action="{{ route('recipe.destroy', $recipe->id) }}" method="POST">
-    @method('DELETE')
-    @csrf
-    <button type="submit">BORRAR RECETA</button>
+
 </form>    
 <script>
     // Añade inputs para introducir ingredientes segun se pulse el boton
@@ -74,6 +74,6 @@
           newIngredient.appendChild(input);
           container.appendChild(newIngredient);
     }
- </script>
+ </script> --}}
 @endsection
 

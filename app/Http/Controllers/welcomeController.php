@@ -10,6 +10,7 @@ class welcomeController extends Controller
 {
     public function index(){
         
-        return view('welcome');
+        $categories = Category::take(8)->get();
+        return view('welcome' , compact('categories'));
     }
 }

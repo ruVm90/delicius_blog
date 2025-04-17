@@ -18,12 +18,14 @@ use Illuminate\Support\Facades\Storage;
 class RecipeController extends Controller
 {
     /**
-     * Pagina principal con el listado de las recetas mas recientes
+     * (PENDIENTE DE HACER)
+     * Mostrar las recetas de todos los usuarios
      */
     public function index()
     {
-        $recipes = Recipe::paginate(2); // Obtengo todas las recetas y las pagino
-        return view('dashboard/recipe/index', compact('recipes')); // Retorno la vista y la variable recipes
+        $recipes = Recipe::orderBy('updated_at', 'desc')->paginate(6); // Ordeno todas las recetas de mas reciente a mas antigua y las pagino
+        
+        return view('dashboard.recipe.index', compact('recipes')); // Retorno la vista y la variable recipes
     }
 
     /**
@@ -72,7 +74,7 @@ class RecipeController extends Controller
                 ]
                 );
          };
-             return to_route('recipe.index')->with('status','Receta creada'); // redirecciono a la vista de inicio y muestro un mensaje
+             return to_route('dashboard')->with('status','Receta creada'); // redirecciono a la vista de inicio y muestro un mensaje
     }
 
     /**
@@ -92,6 +94,7 @@ class RecipeController extends Controller
     public function edit(Recipe $recipe)
     {
        $categories = Category::pluck('id', 'category_name');
+      
        return view('dashboard.recipe.edit', compact('categories','recipe'));
     }
 
@@ -131,7 +134,7 @@ class RecipeController extends Controller
             'recipe_id' => $recipe->id
         ]);
     }
-             return to_route('recipe.index')->with('status','Receta actualizada'); // redirecciono a la vista de inicio y muestro un mensaje
+             return to_route('dashboard')->with('status','Receta actualizada'); // redirecciono a la vista de inicio y muestro un mensaje
     }
 
     
@@ -143,7 +146,7 @@ class RecipeController extends Controller
     public function destroy(Recipe $recipe)
     {
         $recipe->delete();
-        return to_route('recipe.index')->with('status','Receta borrada');
+        return to_route('dashboard')->with('status','Receta borrada');
     }
 
     /**
