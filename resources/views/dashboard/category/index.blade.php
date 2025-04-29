@@ -17,11 +17,15 @@
 
         {{-- Título --}}
         <h2 class="text-3xl font-bold text-gray-800 text-center mb-10">Categorías Populares</h2>
-
+        @if(session('status-category'))
+            <div class="mb-4 p-4 text-green-800 bg-green-100 border border-green-300 rounded-lg">
+            {{ session('status-category')}}
+            </div>
+        @endif
         {{-- Grid de categorías --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             @foreach ($categories as $category)
-                <div class="bg-white p-6 shadow-lg rounded-lg text-center flex flex-col items-center h-72">
+                <div class="bg-white p-6 shadow-lg rounded-lg text-center flex flex-col items-center h-72 hover:shadow-lg transition transform hover:-translate-y-1">
 
                     {{-- Nombre --}}
                     <h3 class="mb-3 text-xl font-semibold uppercase text-gray-800">
@@ -44,9 +48,9 @@
                     {{-- Botones admin --}}
                     @auth
                         @if (Auth::user()->rol === 'admin')
-                            <div class="mt-4 flex gap-4">
+                            <div class="mt-3 flex gap-4">
                                 <a href="{{ route('category.edit', $category->id) }}"
-                                   class="text-sm text-blue-600 hover:text-blue-800 font-medium underline">
+                                   class="text-sm text-blue-600 pt-1 hover:text-blue-800 font-medium underline">
                                     Editar
                                 </a>
 
@@ -55,7 +59,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                            class="text-sm text-red-600 hover:text-red-800 font-medium underline">
+                                            class="text-sm text-red-600 pt-1 hover:text-red-800 font-medium underline">
                                         Eliminar
                                     </button>
                                 </form>

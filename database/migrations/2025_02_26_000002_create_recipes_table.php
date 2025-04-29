@@ -19,9 +19,9 @@ return new class extends Migration
             $table->timestamps();
             $table->string('difficulty');
               
-            // Si un usuario se elimina, todos sus posts se eliminan automáticamente.
+            // Si un usuario se elimina, todos sus recetas se eliminan automáticamente.
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            // Si una categoría se elimina, todos los posts dentro de esa categoría también se eliminan.
+            // Si una categoría se elimina, todos las recetas dentro de esa categoría también se eliminan.
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
         });
     }

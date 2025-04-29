@@ -36,7 +36,7 @@ class CategoryController extends Controller
      {  
         $data = $request->validate([
             'category_name' => 'required|min:3|max:25|unique:categories',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10000'
         ]);
        //dd($data);
         if ($request->hasFile('image')){
@@ -46,7 +46,7 @@ class CategoryController extends Controller
         }
         $category = Category::create(
             [
-            'category_name' => $data['category_name'],
+            'category_name' => ucfirst($data['category_name']), // La primera letra en mayusculas
             'image' => $data['image']
             ]
             );

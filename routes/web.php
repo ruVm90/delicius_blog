@@ -11,41 +11,29 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 
-
+// Pagina de bienvenida
 Route::get('/',[welcomeController::class,'index'])->name('welcome');
 
-
+// Panel dashboard
 Route::get('/dashboard', [RecipeController::class, 'dashboard'])
 ->middleware(['auth'])
 ->name('dashboard');
 
- // Ruta para el buscador
- Route::get('/dashboard/sugerencias', function (Request $request) {
-    $texto = $request->input('q');
-         dd($texto);
-        // Si el campo esta vacio 
-         if (!$texto){
-            return response()->json(['error' => 'parametro vacio'], 400);
-         }
-         // Obtengo las equivalencias de la db
-         $recipes = Recipe::where('title', 'LIKE', '%' . $texto . '%')->get(['id', 'title']);
-
-        return response()->json($recipes);
- }); 
-
+// Recetas CRUD
 Route::resource('dashboard/recipe', RecipeController::class);
 
+// Perfil de usuario público con sus recetas
+Route::get('dashboard/recipe/user/{user}', [RecipeController::class , 'userRecipes'])->name('recipe.user');
+
+// Categorias CRUD
 Route::resource('dashboard/category', CategoryController::class);
 
+// Perfil de usuario
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-Route::get('/prueba-sugerencia', function () {
-    return response()->json(['ok' => true]);
-});
 
 require __DIR__.'/auth.php';

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Storage;
 class RecipeController extends Controller
 {
     /**
-     * (PENDIENTE DE HACER)
+     * 
      * Mostrar las recetas de todos los usuarios
      */
     public function index()
@@ -102,30 +102,53 @@ class RecipeController extends Controller
      * Update the specified resource in storage.
      */
     public function update(StoreRequest $request, Recipe $recipe)
-    {
-        $data = $request->validated(); // Obtengo los datos validos
+{
+    // Obtengo los datos validados
+    $data = $request->validated();
 
+    //  Verificar si hay cambios en los campos principales
+    if ($data["title"] == $recipe->title && 
+        $data["description"] == $recipe->description && 
+        $data["difficulty"] == $recipe->difficulty && 
+        $data["category_id"] == $recipe->category_id) {
+        
+        //  Comparar ingredientes individualmente
+        $existingIngredients = $recipe->ingredients->pluck('name')->toArray(); // Obtengo los nombres de los ingredientes existentes
+        $newIngredients = $data['ingredients']; // Los ingredientes enviados por el usuario
+
+        // Compara los ingredientes (ordenados para evitar problemas de orden)
+        sort($existingIngredients);
+        sort($newIngredients);
+
+        if ($existingIngredients == $newIngredients) {
+            // Si no hay cambios en los ingredientes ni en los campos principales
+            return to_route('dashboard')->with('status', 'No ha habido cambios en la receta');
+        }
+    }
+
+    //  Manejo de la imagen (si se ha cargado una nueva imagen)
     if ($request->hasFile('image')) {
         // Eliminar la imagen anterior si existe
         if ($recipe->image) {
             Storage::disk('public')->delete($recipe->image);
         }
+        // Almacenar la nueva imagen
         $data['image'] = $request->file('image')->store('recipes-img', 'public');
     } else {
-        $data['image'] = $recipe->image; // Mantener la imagen anterior
+        // Mantener la imagen anterior si no se sube una nueva
+        $data['image'] = $recipe->image;
     }
-       $recipe->update(
-            [
-                'title' => $data['title'],
-                'image' => $data['image'],
-                'description' => $data['description'],
-                'difficulty' => $data['difficulty'],
-                'category_id' => $data['category_id'],
-            ]
-            );
-    
-            
-          // Actualizar ingredientes: eliminar los existentes y agregar los nuevos
+
+    //  Actualizar los campos de la receta
+    $recipe->update([
+        'title' => $data['title'],
+        'image' => $data['image'],
+        'description' => $data['description'],
+        'difficulty' => $data['difficulty'],
+        'category_id' => $data['category_id'],
+    ]);
+
+    //  Actualizar los ingredientes: eliminar los anteriores y agregar los nuevos
     $recipe->ingredients()->delete(); // Borra los ingredientes anteriores
 
     foreach ($data['ingredients'] as $ingredient) {
@@ -134,8 +157,11 @@ class RecipeController extends Controller
             'recipe_id' => $recipe->id
         ]);
     }
-             return to_route('dashboard')->with('status','Receta actualizada'); // redirecciono a la vista de inicio y muestro un mensaje
-    }
+
+    //  Redirigir con un mensaje de éxito
+    return to_route('dashboard')->with('status', 'Receta actualizada');
+}
+
 
     
 
@@ -153,10 +179,23 @@ class RecipeController extends Controller
      *  Mostrar el dashboard en mis recetas
      */
     public function dashboard(){
-
-        $user = auth()->user(); // Obtengo el usuario autenticado
+        // Obtengo el usuario autenticado
+        $user = auth()->user(); 
+    
+        // Obtengo las recetas del usuario autenticado
         $my_recipes = $user->recipes()->get();
-
+    
+        // Retorno la vista 'dashboard.recipe.dashboard' y paso las variables 'my_recipes' y 'user'
         return view('dashboard.recipe.dashboard', compact('my_recipes', 'user'));
+    }
+    
+     /**
+     *  Mostrar las recetas del usuario selecionado
+     */
+    public function userRecipes(User $user) {
+
+        $recipes = $user->recipes()->paginate(6);
+
+        return view('dashboard.recipe.user' , compact('recipes', 'user'));
     }
 }

@@ -9,7 +9,7 @@
             <!-- Imagen del usuario -->
             <div class="flex items-center space-x-2">  <!-- Contenedor de la imagen y el nombre -->
                 <img class="  rounded-full object-cover" src="/assets/img/user-img/user-icon.png" alt="User Icon"/>
-                <a href="#" class="uppercase font-bold text-md text-yellow-500 hover:underline">
+                <a href="{{ route('recipe.user' , $recipe->user) }}" class="uppercase font-bold text-md text-yellow-500 hover:underline">
                     {{ $recipe->user->name }}
                 </a>
             </div>

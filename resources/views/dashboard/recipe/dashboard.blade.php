@@ -7,7 +7,12 @@
             Recetas de <span class="text-green-600">{{ $user->name }}</span>
         </h1>
     </div>
-
+     @if (session('status'))
+        <div class="mb-4 p-4 text-green-800 bg-green-100 border border-green-300 rounded-lg">
+        {{ session('status') }}
+         </div>
+         
+     @endif
     <!-- Tabla de recetas -->
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="bg-white shadow-md rounded-lg overflow-x-auto">
