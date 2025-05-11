@@ -16,7 +16,7 @@ class SearchController extends Controller
         // Obtengo la peticion
         
          $texto = $request->input('q');
-         dd($texto);
+         // dd($texto);
         // Si el campo esta vacio 
          if (!$texto){
             return response()->json(['error' => 'parametro vacio'], 400);

@@ -45,7 +45,7 @@ class RecipeController extends Controller
      */
     public function store(StoreRequest $request)
     {
-      // dd($request->all());
+      
       $data = $request->validated(); // Obtengo los datos validos
 
       // Si el request tiene un archivo llamado image la guardo en storage/app/public/recipes-img/
@@ -62,7 +62,7 @@ class RecipeController extends Controller
                 'description' => $data['description'],
                 'difficulty' => $data['difficulty'],
                 'category_id' => $data['category_id'],
-                'user_id' => Auth::id()  // Obtengo la id del usuario que crea la receta // funcionara cuando tenga un usuario autenticado
+                'user_id' => Auth::id()  // Obtengo la id del usuario que crea la receta 
             ]
             );
             // Guardar los ingredientes de la receta

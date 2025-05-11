@@ -19,6 +19,9 @@ Route::get('/dashboard', [RecipeController::class, 'dashboard'])
 ->middleware(['auth'])
 ->name('dashboard');
 
+// Buscador
+Route::get('/dashboard/sugerencias', [SearchController::class, 'mostrarSugerencias'])->name('recipe.search');
+
 // Recetas CRUD
 Route::resource('dashboard/recipe', RecipeController::class);
 
