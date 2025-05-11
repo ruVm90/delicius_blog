@@ -19,9 +19,12 @@
             @if($recipe->image)
                 <img src="{{ asset('storage/' . $recipe->image) }}" class="w-full h-full object-cover" />
             @else
-                <div class="w-full h-full flex items-center justify-center text-gray-400 italic">
-                    Sin imagen
-                </div>
+                <div 
+            class="w-full h-64 flex items-center justify-center border border-dashed border-gray-300 rounded-2xl text-gray-800 text-2xl font-bold backdrop-blur-sm bg-cover bg-center"
+            style="background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), url('/assets/welcome/Portada_blog.png');"
+        >
+            Sin imagen disponible
+        </div>
             @endif
         </section>
     

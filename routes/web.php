@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\RecipeController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\welcomeController;
 use App\Http\Controllers\SearchController;
@@ -30,6 +31,9 @@ Route::get('dashboard/recipe/user/{user}', [RecipeController::class , 'userRecip
 
 // Categorias CRUD
 Route::resource('dashboard/category', CategoryController::class);
+
+// Enviar correo electronico
+Route::get('/send-mail', [MailController::class, 'sendMail']);
 
 // Perfil de usuario
 Route::middleware('auth')->group(function () {

@@ -8,7 +8,7 @@
             {{ __('Utiliza una contraseña larga y segura.') }}
         </p>
     </header>
-
+    
     <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
         @csrf
         @method('put')
@@ -34,7 +34,7 @@
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Guardar') }}</x-primary-button>
 
-            @if (session('status') === 'password-updated')
+            @if (session('status') === 'Contraseña actualizada correctamente')
                 <p
                     x-data="{ show: true }"
                     x-show="show"
@@ -42,7 +42,11 @@
                     x-init="setTimeout(() => show = false, 2000)"
                     class="text-sm text-gray-600 "
                 >{{ __('Guardado.') }}</p>
+                 <div class="mb-4 p-4 text-green-800 bg-green-100 border border-green-300 rounded-lg">
+        {{ session('status') }}
+         </div>
             @endif
+            
         </div>
     </form>
 </section>

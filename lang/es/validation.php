@@ -39,7 +39,7 @@ return [
     'distinct'               => 'El campo :attribute contiene un valor duplicado.',
     'doesnt_end_with'        => 'El campo :attribute no debe finalizar con uno de los siguientes: :values.',
     'doesnt_start_with'      => 'El campo :attribute no debe comenzar con uno de los siguientes: :values.',
-    'email'                  => 'El campo :attribute no es un correo válido.',
+    'email'                  => 'Introduce un correo válido.',
     'ends_with'              => 'El campo :attribute debe finalizar con uno de los siguientes valores: :values',
     'enum'                   => 'El campo :attribute no está en la lista de valores permitidos.',
     'exists'                 => 'El campo :attribute no existe.',
@@ -108,11 +108,11 @@ return [
     'not_regex'              => 'El formato del campo :attribute no es válido.',
     'numeric'                => 'El campo :attribute debe ser numérico.',
     'password'               => [
-        'letters'       => 'La :attribute debe contener al menos una letra.',
-        'mixed'         => 'La :attribute debe contener al menos una letra mayúscula y una minúscula.',
-        'numbers'       => 'La :attribute debe contener al menos un número.',
-        'symbols'       => 'La :attribute debe contener al menos un símbolo.',
-        'uncompromised' => 'La :attribute proporcionada se ha visto comprometida en una filtración de datos (data leak). Elija una :attribute diferente.',
+        'letters'       => 'La contraseña debe contener al menos una letra.',
+        'mixed'         => 'La contraseña debe contener al menos una letra mayúscula y una minúscula.',
+        'numbers'       => 'La contraseña debe contener al menos un número.',
+        'symbols'       => 'La contraseña debe contener al menos un símbolo.',
+        'uncompromised' => 'La contraseña proporcionada se ha visto comprometida en una filtración de datos (data leak). Elija una :attribute diferente.',
     ],
     'present'                => 'El campo :attribute debe estar presente.',
     'present_if'             => 'El campo :attribute debe estar presente cuando :other es :value.',
@@ -141,7 +141,7 @@ return [
         'array'   => 'El campo :attribute debe contener :size elementos.',
         'file'    => 'El tamaño de :attribute debe ser :size kilobytes.',
         'numeric' => 'El tamaño de :attribute debe ser :size.',
-        'string'  => 'El campo :attribute debe contener :size caracteres.',
+        'string'  => 'El :attribute debe contener :size caracteres.',
     ],
     'starts_with'            => 'El campo :attribute debe comenzar con uno de los siguientes valores: :values',
     'string'                 => 'El campo :attribute debe ser una cadena de caracteres.',
@@ -159,7 +159,9 @@ return [
     'ingredients' => 'ingredientes',
     'difficulty' => 'dificultad',
     'category_id' => 'categoría',
-    'image' => 'imagen'
+    'image' => 'imagen',
+    'password' => 'contraseña',
+    'current_password' => 'contraseña actual'
 ],
 
 ];

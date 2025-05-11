@@ -50,6 +50,18 @@
             <x-primary-button class="ms-4">
                 {{ __('Registrarme') }}
             </x-primary-button>
+            @if (Auth::check() && !Auth::user()->hasVerifiedEmail())
+    <form method="POST" action="{{ route('verification.send') }}">
+        @csrf
+        <div class="mt-4 text-sm text-gray-600">
+            {{ __('¿No has recibido el correo de verificación?') }}
+            <button type="submit" class="underline text-sm text-blue-600 hover:text-blue-800 ml-2">
+                {{ __('Reenviar verificación') }}
+            </button>
+        </div>
+    </form>
+@endif
+
         </div>
     </form>
 </x-guest-layout>

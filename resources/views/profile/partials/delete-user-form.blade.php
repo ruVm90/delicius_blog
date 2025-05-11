@@ -19,7 +19,7 @@
             @csrf
             @method('delete')
 
-            <h2 class="text-lg font-medium text-gray-900 ">
+            <h2 class="text-lg font-medium text-gray-300 ">
                 {{ __('¿Estas seguro de que quieres borrar tu cuenta?') }}
             </h2>
 

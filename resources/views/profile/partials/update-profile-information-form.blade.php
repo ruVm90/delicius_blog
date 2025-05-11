@@ -42,6 +42,9 @@
                         <p class="mt-2 font-medium text-sm text-green-600 ">
                             {{ __('Un nuevo link de verificacion ha sido enviado a tu email') }}
                         </p>
+                        <div class="mb-4 p-4 text-green-800 bg-green-100 border border-green-300 rounded-lg">
+        {{ session('status') }}
+         </div>
                     @endif
                 </div>
             @endif
