@@ -32,9 +32,6 @@ Route::get('dashboard/recipe/user/{user}', [RecipeController::class , 'userRecip
 // Categorias CRUD
 Route::resource('dashboard/category', CategoryController::class);
 
-// Enviar correo electronico
-Route::get('/send-mail', [MailController::class, 'sendMail']);
-
 // Perfil de usuario
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

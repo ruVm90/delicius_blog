@@ -14,7 +14,8 @@ class Ingredient extends Model
 
    protected $fillable = [
         'name',
-        'recipe_id'
+        'recipe_id',
+        'quantity'
    ];
    public $timestamps = false;
 

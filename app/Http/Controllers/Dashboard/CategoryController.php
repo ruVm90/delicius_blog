@@ -33,24 +33,24 @@ class CategoryController extends Controller
      * Guardo la categoria en la base de datos
      */
     public function store(Request $request)
-     {  
+    {
         $data = $request->validate([
             'category_name' => 'required|min:3|max:25|unique:categories',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10000'
         ]);
-       //dd($data);
-        if ($request->hasFile('image')){
-            $data['image'] = $request->file('image')->store('categories-img' , 'public');
-        } else{
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('categories-img', 'public');
+        } else {
             $data['image'] = null;
         }
         $category = Category::create(
             [
-            'category_name' => ucfirst($data['category_name']), // La primera letra en mayusculas
-            'image' => $data['image']
+                'category_name' => ucfirst($data['category_name']), // La primera letra en mayusculas
+                'image' => $data['image']
             ]
-            );
-            
+        );
+
         return to_route('category.index')->with('status-category', 'Categoria creada');
     }
 
@@ -61,11 +61,11 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         $recipes = $category->recipes()->paginate(6);
-        return view('dashboard.category.recipes', compact('category','recipes'));
+        return view('dashboard.category.recipes', compact('category', 'recipes'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar la categoria
      */
     public function edit(Category $category)
     {
@@ -73,7 +73,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza la categoria
      */
     public function update(Request $request, Category $category)
     {
@@ -83,12 +83,12 @@ class CategoryController extends Controller
                 'category_name' => 'required|min:3|max:25|unique:categories,category_name,' . $category->id,
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
             ]);
-              
-            if( $request->hasFile('image')){
-                if ($category->image){
+
+            if ($request->hasFile('image')) {
+                if ($category->image) {
                     Storage::disk('public')->delete($category->image);
                 }
-                $data['image'] = $request->file('image')->store('categories-img' , 'public');
+                $data['image'] = $request->file('image')->store('categories-img', 'public');
             } else {
                 $data['image'] = $category->image;
             }
@@ -97,19 +97,19 @@ class CategoryController extends Controller
                 'category_name' => $data['category_name'],
                 'image' => $data['image']
             ]);
-            
+
             // Redirigimos con un mensaje de éxito
             return to_route('category.index')->with('status-category', 'Categoria actualizada');
         }
-    
+
         // Si no hay cambios, no hacemos nada y redirigimos
         return to_route('category.index')->with('status-category', 'No hubo cambios en la categoría');
     }
 
-    
+
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina la categoria (Solo admin)
      */
     public function destroy(Category $category)
     {

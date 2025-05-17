@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 
 class welcomeController extends Controller
 {
-    public function index(){
-        
+    // Muestra las 8 primeras categorias
+    public function index()
+    {
+
         $categories = Category::take(8)->get();
-        return view('welcome' , compact('categories'));
+        return view('welcome', compact('categories'));
     }
 }

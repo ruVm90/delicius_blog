@@ -28,7 +28,15 @@ class StoreRequest extends FormRequest
             'difficulty' => 'required|string|in:Facil,Medio,Dificil',
             'category_id' => 'required|integer',
             'ingredients' => 'required|array|min:1', // Debe ser un array y tener al menos un ingrediente
-            'ingredients.*' => 'required|string|max:255', // Cada ingrediente debe ser un string válido
+            'ingredients.*.name' => 'required|string|max:255', // Cada ingrediente debe ser un string válido
+            'ingredients.*.quantity' => 'required|string|max:100',
         ];
     }
+    public function messages()
+{
+    return [
+        'ingredients.*.name.required' => 'El campo ingrediente es obligatorio.',
+        'ingredients.*.quantity.required' => 'El campo cantidad es obligatorio.',
+    ];
+}
 }

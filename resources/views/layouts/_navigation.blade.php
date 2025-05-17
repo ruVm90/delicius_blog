@@ -36,8 +36,8 @@
 
                 <form action="#" method="GET" class="relative flex items-center">
 
-                    <div class="relative w-48 sm:w-64">
-                        <input id="q" name="q" type="search" placeholder="Buscar receta..."
+                    <div id="buscador-wrapper" class="relative w-48 sm:w-64">
+                        <input id="q" name="q"  type="search" placeholder="Buscar receta..."
                             onkeyup="mostrarSugerencias(this.value)" autocomplete="off"
                             class="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 leading-5 placeholder-gray-500 focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-sm">
 
@@ -93,16 +93,10 @@
 
 
 <script>
-    // Mobile Menu Toggle
-    const menuButton = document.getElementById('menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    menuButton.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-    });
-
+    
     function mostrarSugerencias(str) {
     let request = new XMLHttpRequest();
-    let listaSugerencias = document.getElementById('sugerencias');
+   let listaSugerencias = document.getElementById('sugerencias');
 
     if (str.length === 0 || typeof str !== 'string') {
         listaSugerencias.innerHTML = "";
@@ -151,5 +145,22 @@
     // Redirige directamente a la receta
     window.location.href = "/dashboard/recipe/" + recipeId;
 }
+   
+  document.addEventListener('DOMContentLoaded', function () {
+    const input = document.getElementById('q');
+
+    input.addEventListener('blur', function () {
+        setTimeout(() => {
+            document.getElementById('sugerencias').classList.add('hidden');
+        }, 100);
+    });
+});
+
+
+
+
+
+
+
 
 </script>
